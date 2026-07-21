@@ -5,6 +5,11 @@
 ## Live site
 
 - https://auralab-headsets-2026.shdls1016.chatgpt.site
+- GitHub Pages: https://shdls1016-max.github.io/headphone/
+
+## Static HTML version
+
+GitHub Pages용 정적 사이트는 `docs/`에 있습니다. `docs/index.html`을 직접 열어도 동작합니다. 저장소의 **Settings → Pages**에서 `Deploy from a branch`, `main`, `/docs`를 선택하면 Pages 주소에 배포됩니다.
 
 ## Features
 
