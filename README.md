@@ -1,98 +1,50 @@
-# vinext-starter
+# AURALAB Headset Store
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+프리미엄 헤드셋 브랜드 **AURALAB**의 반응형 쇼핑몰 프로젝트입니다.
 
-## Prerequisites
+## Live site
 
-- Node.js `>=22.13.0`
+- https://auralab-headsets-2026.shdls1016.chatgpt.site
 
-## Quick Start
+## Features
+
+- 100vh 풀스크린 히어로
+- HALO X1 블랙·화이트·라이트블루·바이올렛 제품 이미지
+- Swiper 기반 제품 슬라이드
+- GSAP ScrollTrigger 및 Pin 스크롤 연출
+- 데스크톱 드롭다운 GNB와 모바일 전체 메뉴
+- 제품 컬러 선택 및 장바구니 추가
+- 수량 변경, 삭제, 합계 계산, 브라우저 저장 장바구니
+- 제품, 상세, 액세서리, 기술, 브랜드, 저널, 지원, 배송, 보증, 제품 등록 페이지
+- 최대 콘텐츠 폭 1500px의 반응형 레이아웃
+
+## Tech stack
+
+- React 19
+- Next.js / vinext
+- TypeScript
+- GSAP
+- Swiper
+- Tailwind CSS
+
+## Run locally
+
+Node.js 22.13 이상이 필요합니다.
 
 ```bash
 npm install
 npm run dev
+```
+
+프로덕션 빌드 확인:
+
+```bash
 npm run build
 ```
 
-This starter does not use `wrangler.jsonc`.
+## Main source
 
-## Included Shape
-
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
-```
-
-## Optional Dispatch-Owned ChatGPT Sign-In
-
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
-
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
-
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
-
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Useful Commands
-
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+- `app/storefront.tsx` — 화면, GNB, 상품 선택, 장바구니 동작
+- `app/globals.css` — 전체 스타일과 반응형 디자인
+- `public/products/` — 헤드셋 상품 이미지
+- `app/**/page.tsx` — 각 서브페이지 진입점
